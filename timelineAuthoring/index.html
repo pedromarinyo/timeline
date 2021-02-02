@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <!--Style Sheet  -->
+        <link rel="stylesheet" href="style.css"> 
+
+        <!-- Jquery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- Scripting -->
+        <script src="script.js"></script>
+    </head>
+
+    <body onload="init()">
+
+        <div id="instructions">
+            <div id="title">Timeline Authoring Tool</div>
+            <span class="titleSubheading" onclick="createXML()">Export</span>
+            <input type="file" style="display:none;" id="file-selector">
+            <label for="file-selector" class="titleSubheading">Load a file</label>
+
+        </div>
+
+        <!-- Timeline outline -->
+        <div id="timeline"></div>
+
+        <!-- Tile inspector -->
+        <div id="inspector">            
+            <!-- Close button -->
+            <div id="inspectorClose" onclick="hideInspector()"></div>
+            <!-- Tile details -->
+            <span id="inspectorTileName" class="inspectorHeading"></span>
+            <span id="inspectorIcon" class="inspectorSubheading"></span>
+            <span id="inspectorMedia"></span>
+            
+            <!-- Tile editing -->
+            <div id="inspectorEditing">  
+                <!-- Editing Options -->
+                <span id="mediaOptions">
+                    
+                    <!-- Add Media -->
+                    <!-- Add media deails -->
+                    <div id="addMedia" class="displayNone">
+                        <span class="tileDetails">assets/</span><input type="text" id="addMediaFileName" value="file_name">
+                        <div class="addButton" onclick="addMedia()">Add</div>
+                    </div>
+                    <!-- Add media button -->
+                    <div class="addButton" id="addMediaButton" onclick="showAddMedia()">Add Media</div>
+
+                    <!-- Change Tile Name -->
+                    <!-- Change tile name -->
+                    <div id="updateName" class="displayNone">
+                        <input type="text" id="updateNameInput" value="Tile Name">
+                        <div class="addButton" onclick="updateName()">Update</div>
+                    </div>
+                    <!-- Change tile name button -->
+                    <div class="addButton" id="updateNameButton" onclick="showUpdateName()">Change Tile Name</div>
+
+                    <!-- Change Column Name -->
+                    <!-- Change column  name -->
+                    <div id="updateColumnName" class="displayNone">
+                        <input type="text" id="updateColumnNameInput" value="Column Name">
+                        <div class="addButton" onclick="updateColumnName()">Update</div>
+                    </div>
+                    <!-- Change tile name button -->
+                    <div class="addButton displayNone" id="updateColumnNameButton" onclick="showUpdateColumnName()">Change Column Name</div>
+                    
+
+                    <!-- Condition editor -->
+                    <div id="conditionEditorClose" onclick="hideConditionEditor()"></div>
+                    <span id="conditionEditor"></span>
+
+                    <!-- Add condition details -->
+                    <div id="addCondition" class="displayNone">                        
+                        <select id="addConditionChoice" onchange="updateChoiceOptions()"></select>
+                        <select id="addConditionChoiceChosen"></select>
+                        <div class="addButton" onclick="addCondition()">Add</div>
+                    </div>
+                    <!-- Add condition button -->
+                    <div id="addConditionButton" class="displayNone addButton" onclick="showAddCondition()">Add Condition</div>
+
+                    <!-- Add tile icon for choice -->
+                    <div id="addIcon" class="displayNone">                        
+                        <span class="tileDetails">assets/</span><input type="text" id="updateIcon" value="file_name">
+                        <div class="addButton" onclick="addIcon()">Add</div>
+                    </div>
+                    <!-- Add icon button -->
+                    <div id="addIconButton" class="displayNone addButton" onclick="showAddIcon()">Add Icon</div>
+
+                </span>                               
+            </div>            
+        </div>
+            
+    </body>
+
+</html>
+
