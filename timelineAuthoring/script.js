@@ -6,8 +6,6 @@ var selectedTile = null;
 var selectedMedia = null;   
 var ids = 0;   
 
-
-
 // Authoring interface initialization
 function init() {                
     // Creating an empty tile
@@ -253,8 +251,9 @@ function addTile(isRight) {
     let tileIndex = timeline.indexOf(timeline.find(tile => {return tile.id == tileID}));                
 
     // Creating an empty tile
+    ids++;
     let emptyTile =  {
-            id: ids++,
+            id: ids,
             type: "static",
             name: "Static Tile",
             mediaType: "image",
@@ -338,15 +337,16 @@ function addChoice() {
     // Changing selectedTile global to type choice
     // If static tile...
     if (selectedTile.type == "static") {
+        ids++;
         let emptyChoiceColumn = {
             id: selectedTile.id,
             type: "choiceColumn",
             name: "Choice Column",
             choices: new Array(
                 {
-                    id: ids++,
+                    id: ids,
                     parentID: selectedTile.id,
-                    name: "Choice 1",
+                    name: "Choice " + ids,
                     type: "choice",
                     mediaType: "image",  
                     icon: "sample.png",                  
@@ -367,10 +367,11 @@ function addChoice() {
 
 
         // Pushing empty choice into choiceColumn
+        ids++;
         let emptyChoice = {
-            id: ids++,
+            id: ids,
             parentID: choiceColumn.id,
-            name: "Choice " + (ids),
+            name: "Choice " + ids,
             type: "choice",
             mediaType: "image",
             icon: "sample.png",
@@ -443,7 +444,7 @@ function showInspector() {
     $("#inspectorMedia").html(mediaList);
 
     // Showing inspector, hiding others
-    $("#inspector").show();            
+    $("#inspector").fadeIn(100);            
     hideInspectorButtons();
 
     // Showing add media button and update name buttons
@@ -706,7 +707,9 @@ function showConditionEditor(selectedMedia){
 
     // Hiding add media button and media options, showing add condition button
     hideInspectorButtons();
-    $("#addConditionButton").show();
+    let firstChoiceColumn = timeline.find(tile => { return tile.type == "choiceColumn"; });
+    if (typeof firstChoiceColumn != "undefined") {$("#addConditionButton").show();}
+    
 
     // Showing condition editor
     $("#conditionEditor").show();
@@ -740,10 +743,13 @@ function showAddCondition() {
 
     // Populating choiceChosen with first choiceColumn's choices
     let firstChoiceColumn = timeline.find(tile => { return tile.type == "choiceColumn"; });
+    if (typeof firstChoiceColumn == "undefined") {}
+
     let selectOptionsChoicesHTML = "";
     firstChoiceColumn.choices.forEach(choice => {
         selectOptionsChoicesHTML += "<option value=" + choice.id + ">" + choice.name + "</option>";
     });
+
     $("#addConditionChoiceChosen").html(selectOptionsChoicesHTML);
 
     // Showing add conditions dialogue
@@ -916,13 +922,21 @@ function createXML(){
 // create js timeline from xml
 function loadTimelineFromXML(xml) {
     timeline = new Array();
-    var xmlArray = xml.getElementsByTagName("tile");    // Stores xml objects
+    
+    // Stores xml objects
+    var xmlArray = xml.getElementsByTagName("tile");    
+
+    // Stores higest id
+    let latestId = 0; 
 
     for (var i = 0; i <= xmlArray.length - 1; i++) {
         // Get tile type
         let id = xmlArray[i].getElementsByTagName("id")[0].childNodes[0].nodeValue;
         let type = xmlArray[i].getElementsByTagName("type")[0].childNodes[0].nodeValue;
         let name = xmlArray[i].getElementsByTagName("name")[0].childNodes[0].nodeValue;
+
+        // Checking if id is greater than latestId
+        if(parseInt(id) > latestId) { latestId = parseInt(id); }
 
         let tile; 
 
@@ -938,6 +952,11 @@ function loadTimelineFromXML(xml) {
             for (let j = 0; j < videos.length; j++) {
 
                 let id = videos[j].getElementsByTagName("id")[0].childNodes[0].nodeValue;
+
+                // Checking if id is greater than latestId
+                if(parseInt(id) > latestId) { latestId = parseInt(id); }
+                console.log(id);
+
                 let fileName = videos[j].getElementsByTagName("path")[0].childNodes[0].nodeValue;
 
                 let media = {
@@ -969,6 +988,10 @@ function loadTimelineFromXML(xml) {
             
             let choiceColumnID = xmlArray[i].getElementsByTagName("id")[0].childNodes[0].nodeValue;
 
+            // Checking if id is greater than latestId
+            if(parseInt(choiceColumnID) > latestId) { latestId = parseInt(choiceColumnID); }
+            console.log(choiceColumnID);
+
             tile = {
                 id: id,
                 type: "choiceColumn",
@@ -980,6 +1003,12 @@ function loadTimelineFromXML(xml) {
             for (let j = 0; j < choices.length; j++) {
 
                 let choiceID = choices[j].getElementsByTagName("choiceChosen")[0].childNodes[0].nodeValue; 
+
+
+                // Checking if id is greater than latestId
+                if(parseInt(choiceID) > latestId) { latestId = parseInt(choiceID); }
+                console.log(choiceID);
+
                 let name = choices[j].getElementsByTagName("name")[0].childNodes[0].nodeValue;  
                 let iconPath = choices[j].getElementsByTagName("iconPath")[0].childNodes[0].nodeValue;                
 
@@ -997,6 +1026,10 @@ function loadTimelineFromXML(xml) {
                     
                     let id = videos[k].getElementsByTagName("id")[0].childNodes[0].nodeValue;
                     let fileName = videos[k].getElementsByTagName("path")[0].childNodes[0].nodeValue;
+
+                    // Checking if id is greater than latestId
+                    if(parseInt(id) > latestId) { latestId = parseInt(id); }
+                    console.log(id);
 
                     let media = {
                         id: id,
@@ -1023,6 +1056,10 @@ function loadTimelineFromXML(xml) {
                 tile.choices.push(choice);
             }
             timeline.push(tile);
+
+            // Refreshing global id to create more unique ids
+            ids = latestId;
+            console.log(ids);
         }
     }
     
