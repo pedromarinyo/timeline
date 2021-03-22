@@ -20,13 +20,15 @@
             <label for="file-selector" class="titleSubheading">Load</label>
             <a class="titleSubheading" href="https://pedromarinyo.github.io/timeline/timelinePlayer/timelinePlayer.zip">Download Player</a>
 
+            <span class="titleSubheading" style="border-left: solid #aaa 2px;" onclick="showHelp()">Instructions</span>
+
         </div>
 
         <!-- Timeline outline -->
         <div id="timeline"></div>
 
         <!-- Tile inspector -->
-        <div id="inspector">            
+        <div id="inspector">
             <!-- Close button -->
             <div id="inspectorClose" onclick="hideInspector()"></div>
             <!-- Tile details -->
@@ -92,6 +94,22 @@
             </div>            
         </div>
             
+        <div id="help">
+            <div id="helpClose" onclick="hideHelp()"></div>
+            This tool facilitates the creation of parameterized stories. 
+            <br><br>
+            <i>Tiles</i> come in two varieties: Static and Choice Columns, which afford interactors a choice between parameters. Each can be assigned multiple <i>media</i> (i.e. images or video); each media can be assigned <i>conditions</i> under which to trigger. 
+            <br><br>
+            To play an authored story: 
+            <ol>
+                <li>Download the Timeline player linked above.</li>
+                <li>Extract the zip file.</li>
+                <li>Insert media into the assets folder.</li>
+                <li>Open timelinePlayer.html. </li>
+            </ol>
+    
+        </div>
+
     </body>
 
 </html>

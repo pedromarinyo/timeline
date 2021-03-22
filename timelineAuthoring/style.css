@@ -93,6 +93,26 @@ html, body {
     transform: translate(50%, -25%);
 }
 
+/*Help Instructions*/
+#help {
+    position: absolute;
+    display: none;
+    right: 50%;
+    top: 0px;
+    width: 400px; 
+    height: 300px;     
+    margin: 0px;
+    transform: translateX(+50%) translateY(+50%);    
+    padding: 20px;
+
+    color: #eee;
+
+    border-radius: 10px;
+    
+    box-shadow: 0px 0px 16px #000;
+    background-color: #524f49;     
+}
+
 /*Inspector*/
 #inspector {
     position: fixed;
@@ -238,10 +258,41 @@ html, body {
     box-shadow: 0px 0px 8px #222;
 }
 input {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 12pt;
+    padding: 10px;
+    margin: 2px;
+    background-color: #222;   
+    color: #eee;
+    border-radius: 10px;
+    border-style: none;
+    box-shadow: 0px 0px 4px #111;
     text-align: center;
-    margin: 10px;
-    height: 30px; 
-    font-size: 0.9em;    
-    color: #111; 
-    background-color: #e1ece3;
+    margin: 10px;       
+    /*background-color: #e1ece3;*/
+}
+
+select {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 12pt;
+    padding: 10px;
+    margin: 2px;
+    background-color: #222;   
+    color: #eee;
+    border-radius: 10px;
+    border-style: none;
+    box-shadow: 0px 0px 4px #111;
+}
+
+#helpClose {    
+    box-shadow: 0px 0px 4px #111;
+    margin-left: 370px;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    background-image: url("closeSmall.png");
+    background-color: #666; 
+    background-position: center;
+    background-size: cover;    
+    cursor: pointer;
 }

@@ -13,7 +13,7 @@ function init() {
         {
             id: 0,
             type: "static",
-            name: "First Tile",
+            name: "Static Tile",
             mediaType: "image",
             media: new Array({id: 0, fileName: "sample.mp4", conditions: []})                    
         }       
@@ -1065,6 +1065,14 @@ function loadTimelineFromXML(xml) {
     
     console.log(timeline);
     drawTimeline(timeline);
+}
+
+function showHelp() {
+    $("#help").fadeIn(100);
+}
+
+function hideHelp() {
+    $("#help").fadeOut(100);   
 }
 
 // {
