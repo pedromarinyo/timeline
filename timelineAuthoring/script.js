@@ -885,6 +885,8 @@ function createXML(){
                     xml += "<choice>";
                     xml += "<name>"+ choice.name +"</name>";
                     xml += "<iconPath>"+ choice.icon +"</iconPath>";
+                    xml += "<choiceID>"+ choice.parentID +"</choiceID>";
+                    xml += "<choiceChosen>"+ choice.id +"</choiceChosen>";
 
                     xml += "<videos>";
                     choice.media.forEach(media => {
@@ -901,8 +903,7 @@ function createXML(){
                     });
                     xml += "</videos>";
 
-                    xml += "<choiceID>"+ choice.parentID +"</choiceID>";
-                    xml += "<choiceChosen>"+ choice.id +"</choiceChosen>";
+                    
 
                     xml += "</choice>";
                 });
@@ -1003,6 +1004,7 @@ function loadTimelineFromXML(xml) {
             for (let j = 0; j < choices.length; j++) {
 
                 let choiceID = choices[j].getElementsByTagName("choiceChosen")[0].childNodes[0].nodeValue; 
+                console.log(choiceID)
 
 
                 // Checking if id is greater than latestId
@@ -1058,7 +1060,7 @@ function loadTimelineFromXML(xml) {
             timeline.push(tile);
 
             // Refreshing global id to create more unique ids
-            ids = latestId;
+            ids = latestId++;
             console.log(ids);
         }
     }
