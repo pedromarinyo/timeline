@@ -15,7 +15,7 @@ var tilePadding = 10;
 var tileSize;
 var tileWrapper = 120;
 var timelineTopRatio = 0.6;
-var imageTimer = 5000;
+var imageTimer = 20000;
 
 var tileColor = "#F7F0F0";
 var tileFontColor = "#333";
