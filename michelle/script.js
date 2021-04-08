@@ -15,7 +15,7 @@ var tilePadding = 10;
 var tileSize;
 var tileWrapper = 120;
 var timelineTopRatio = 0.6;
-var imageTimer = 20000;
+var imageTimer = 30000;
 
 var tileColor = "#F7F0F0";
 var tileFontColor = "#333";
@@ -177,8 +177,15 @@ function drawTimeline(xml){
 			  	selectable: false
 			});
 
+			// Creating label and tile group
+			var tileGroup = new fabric.Group([rect, label], {
+				hoverCursor: "default",
+			  	selectable: false,
+			  	id: id
+			});			
+
 			// If object clicked, update queueIndex and play
-			rect.on({
+			tileGroup.on({
 				"mousedblclick": function(e){										
 					// queueIndex = Math.floor(e.target.left / tileWrapper);					
 					for (var j = xmlArray.length - 1; j >= 0; j--) {
@@ -202,8 +209,7 @@ function drawTimeline(xml){
 			});
 
 			// Add fabric tile object to array
-			tileArray.push(rect);
-			tileArray.push(label);			
+			tileArray.push(tileGroup);						
 		}
 
 		// If tile is of type "choice", draw choice column
