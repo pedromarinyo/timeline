@@ -9,11 +9,13 @@ var videoQueue;
 var queueIndex = 0;
 var playhead; 
 var isPlaying = false;
+var timer; 
 
 var tilePadding = 10;
 var tileSize;
-var tileWrapper;
-var timelineTopRatio = 0.5;
+var tileWrapper = 120;
+var timelineTopRatio = 0.6;
+var imageTimer = 30000;
 
 var tileColor = "#F7F0F0";
 var tileFontColor = "#333";
@@ -45,21 +47,23 @@ function init(){
 		c.clear();
 		c.setHeight(window.innerHeight * (1 / 2));				
 		
-		document.getElementById("file-selector").style.display = "none";
+		// document.getElementById("file-selector").style.display = "none";
 		
-		document.getElementById("video").height = (window.innerHeight / 2);
-		document.getElementById("video").style.display = "block";
+		// document.getElementById("video").height = (window.innerHeight / 2);
+		// document.getElementById("video").style.display = "block";
 
 		// Parse XML Timeline
 		parser = new DOMParser();
 		xmlTimeline = parser.parseFromString(event.target.result,"text/xml");
-		// xmlTimeline = parser.parseFromString(relivingLastNight,"text/xml");
+		// let nowOrForever = "<timeline><tile><id>0</id><type>static</type><name>The Setup</name><videos><video><id>16</id><path>setup.mp4</path></video></videos></tile><tile><id>5</id><type>choice</type><name>Let Her Go or Tell Her</name><choices><choice><name>Let Her Go</name><iconPath>letHerGo.jpeg</iconPath><choiceID>5</choiceID><choiceChosen>6</choiceChosen><videos><video><id>21</id><path>letHerGo.mp4</path></video></videos></choice><choice><name>Tell Her</name><iconPath>tellHer.jpeg</iconPath><choiceID>5</choiceID><choiceChosen>7</choiceChosen><videos><video><id>20</id><path>tellHer.mp4</path></video></videos></choice></choices></tile><tile><id>8</id><type>static</type><name>Coat Closet</name><videos><video><id>22</id><path>coatClosetA.mp4</path><condition><choiceID>5</choiceID><choiceChosen>6</choiceChosen></condition></video><video><id>23</id><path>coatClosetB.mp4</path><condition><choiceID>5</choiceID><choiceChosen>7</choiceChosen></condition></video></videos></tile><tile><id>9</id><type>static</type><name>Infidelity</name><videos><video><id>24</id><path>infidelityA.mp4</path><condition><choiceID>5</choiceID><choiceChosen>6</choiceChosen></condition></video><video><id>25</id><path>infidelityB.mp4</path><condition><choiceID>5</choiceID><choiceChosen>7</choiceChosen></condition></video></videos></tile><tile><id>10</id><type>choice</type><name>Text Priest or Text Self</name><choices><choice><name>Text Priest</name><iconPath>textPriest.jpeg</iconPath><choiceID>10</choiceID><choiceChosen>11</choiceChosen><videos><video><id>26</id><path>textPriestA.mp4</path><condition><choiceID>5</choiceID><choiceChosen>6</choiceChosen></condition></video><video><id>27</id><path>textPriestB.mp4</path><condition><choiceID>5</choiceID><choiceChosen>7</choiceChosen></condition></video></videos></choice><choice><name>Text Self</name><iconPath>textSelf.jpeg</iconPath><choiceID>10</choiceID><choiceChosen>12</choiceChosen><videos><video><id>28</id><path>textSelfA.mp4</path><condition><choiceID>5</choiceID><choiceChosen>6</choiceChosen></condition></video><video><id>29</id><path>textSelfB.mp4</path><condition><choiceID>5</choiceID><choiceChosen>7</choiceChosen></condition></video></videos></choice></choices></tile><tile><id>13</id><type>static</type><name>Ceremony</name><videos><video><id>30</id><path>ceremonyA1.mp4</path><condition><choiceID>5</choiceID><choiceChosen>6</choiceChosen></condition><condition><choiceID>10</choiceID><choiceChosen>11</choiceChosen></condition></video><video><id>31</id><path>ceremonyA2.mp4</path><condition><choiceID>5</choiceID><choiceChosen>6</choiceChosen></condition><condition><choiceID>10</choiceID><choiceChosen>12</choiceChosen></condition></video><video><id>32</id><path>ceremonyB1.mp4</path><condition><choiceID>5</choiceID><choiceChosen>7</choiceChosen></condition><condition><choiceID>10</choiceID><choiceChosen>11</choiceChosen></condition></video><video><id>33</id><path>ceremonyB2.mp4</path><condition><choiceID>5</choiceID><choiceChosen>7</choiceChosen></condition><condition><choiceID>10</choiceID><choiceChosen>12</choiceChosen></condition></video></videos></tile><tile><id>14</id><type>choice</type><name>Attend or Escape</name><choices><choice><name>Attend</name><iconPath>attendIcon.jpeg</iconPath><choiceID>14</choiceID><choiceChosen>15</choiceChosen><videos><video><id>34</id><path>attendA1.mp4</path><condition><choiceID>5</choiceID><choiceChosen>6</choiceChosen></condition><condition><choiceID>10</choiceID><choiceChosen>11</choiceChosen></condition></video><video><id>35</id><path>attendA2.mp4</path><condition><choiceID>5</choiceID><choiceChosen>6</choiceChosen></condition><condition><choiceID>10</choiceID><choiceChosen>12</choiceChosen></condition></video><video><id>36</id><path>attendB1.mp4</path><condition><choiceID>5</choiceID><choiceChosen>7</choiceChosen></condition><condition><choiceID>10</choiceID><choiceChosen>11</choiceChosen></condition></video><video><id>37</id><path>attendB2.mp4</path><condition><choiceID>5</choiceID><choiceChosen>7</choiceChosen></condition><condition><choiceID>10</choiceID><choiceChosen>12</choiceChosen></condition></video></videos></choice><choice><name>Escape</name><iconPath>escapeIcon.jpeg</iconPath><choiceID>14</choiceID><choiceChosen>16</choiceChosen><videos><video><id>38</id><path>escapeA1.mp4</path><condition><choiceID>5</choiceID><choiceChosen>6</choiceChosen></condition><condition><choiceID>10</choiceID><choiceChosen>11</choiceChosen></condition></video><video><id>39</id><path>escapeA2.mp4</path><condition><choiceID>5</choiceID><choiceChosen>6</choiceChosen></condition><condition><choiceID>10</choiceID><choiceChosen>12</choiceChosen></condition></video><video><id>40</id><path>escapeB1.mp4</path><condition><choiceID>5</choiceID><choiceChosen>7</choiceChosen></condition><condition><choiceID>10</choiceID><choiceChosen>11</choiceChosen></condition></video><video><id>41</id><path>escapeB2.mp4</path><condition><choiceID>5</choiceID><choiceChosen>7</choiceChosen></condition><condition><choiceID>10</choiceID><choiceChosen>12</choiceChosen></condition></video></videos></choice></choices></tile><tile><id>17</id><type>static</type><name>The End</name><videos><video><id>42</id><path>justice.mp4</path><condition><choiceID>5</choiceID><choiceChosen>6</choiceChosen></condition><condition><choiceID>10</choiceID><choiceChosen>11</choiceChosen></condition><condition><choiceID>14</choiceID><choiceChosen>15</choiceChosen></condition></video><video><id>43</id><path>knowThyselfA1.mp4</path><condition><choiceID>5</choiceID><choiceChosen>6</choiceChosen></condition><condition><choiceID>10</choiceID><choiceChosen>11</choiceChosen></condition><condition><choiceID>14</choiceID><choiceChosen>16</choiceChosen></condition></video><video><id>44</id><path>watchFireworks.mp4</path><condition><choiceID>5</choiceID><choiceChosen>6</choiceChosen></condition><condition><choiceID>10</choiceID><choiceChosen>12</choiceChosen></condition><condition><choiceID>14</choiceID><choiceChosen>15</choiceChosen></condition></video><video><id>45</id><path>knowThyselfA2.mp4</path><condition><choiceID>5</choiceID><choiceChosen>6</choiceChosen></condition><condition><choiceID>10</choiceID><choiceChosen>12</choiceChosen></condition><condition><choiceID>14</choiceID><choiceChosen>16</choiceChosen></condition></video><video><id>46</id><path>pepTalk.mp4</path><condition><choiceID>5</choiceID><choiceChosen>7</choiceChosen></condition><condition><choiceID>10</choiceID><choiceChosen>11</choiceChosen></condition><condition><choiceID>14</choiceID><choiceChosen>15</choiceChosen></condition></video><video><id>47</id><path>paradoxSunset.mp4</path><condition><choiceID>5</choiceID><choiceChosen>7</choiceChosen></condition><condition><choiceID>10</choiceID><choiceChosen>11</choiceChosen></condition><condition><choiceID>14</choiceID><choiceChosen>16</choiceChosen></condition></video><video><id>48</id><path>self-recriminations.mp4</path><condition><choiceID>5</choiceID><choiceChosen>7</choiceChosen></condition><condition><choiceID>10</choiceID><choiceChosen>12</choiceChosen></condition><condition><choiceID>14</choiceID><choiceChosen>15</choiceChosen></condition></video><video><id>49</id><path>hauntedCar.mp4</path><condition><choiceID>5</choiceID><choiceChosen>7</choiceChosen></condition><condition><choiceID>10</choiceID><choiceChosen>12</choiceChosen></condition><condition><choiceID>14</choiceID><choiceChosen>16</choiceChosen></condition></video></videos></tile></timeline>";
+		// xmlTimeline = parser.parseFromString(nowOrForever,"text/xml");
 
 		console.log(xmlTimeline); 
 		
 		// Preload images from timeline; once done, drawTimeline()				
 		preloadImages(xmlTimeline, function (){
-			drawTimeline(xmlTimeline); 
+			drawTimeline(xmlTimeline);	
+			// drawPlayStopButton();		
 			drawPlayhead();			
 		});		
 	});	
@@ -123,12 +127,7 @@ function drawTimeline(xml){
 	
 	var xmlArray = xml.getElementsByTagName("tile");	// Stores xml objects
 	var tileArray = [];									// Stores fabric objects
-
-	// Diving canvas width by number of tiles, xmlArray.length
-	// Determining tile width subtracting padding * 2	
-	// tileWrapper = (c.width / xmlArray.length);		// Individual tile wrapper with padding
 	
-	tileWrapper = 150;
 	tileSize = tileWrapper - (tilePadding * 2);  		// Tile width without padding 
 	c.setWidth(tileWrapper * xmlArray.length);
 	
@@ -160,8 +159,8 @@ function drawTimeline(xml){
 			rect.set('shadow', new fabric.Shadow({
 				blur: 10,
 		        color: 'rgba(0,0,0,0.5)',
-		        offsetX: 10,
-		        offsetX: 10
+		        offsetX: 5,
+		        offsetY: 5
 			}));
 
 			// Create tile label text
@@ -178,8 +177,15 @@ function drawTimeline(xml){
 			  	selectable: false
 			});
 
+			// Creating label and tile group
+			var tileGroup = new fabric.Group([rect, label], {
+				hoverCursor: "default",
+			  	selectable: false,
+			  	id: id
+			});			
+
 			// If object clicked, update queueIndex and play
-			rect.on({
+			tileGroup.on({
 				"mousedblclick": function(e){										
 					// queueIndex = Math.floor(e.target.left / tileWrapper);					
 					for (var j = xmlArray.length - 1; j >= 0; j--) {
@@ -203,8 +209,7 @@ function drawTimeline(xml){
 			});
 
 			// Add fabric tile object to array
-			tileArray.push(rect);
-			tileArray.push(label);			
+			tileArray.push(tileGroup);						
 		}
 
 		// If tile is of type "choice", draw choice column
@@ -242,8 +247,8 @@ function drawTimeline(xml){
 				rect.set('shadow', new fabric.Shadow({
 					blur: 10,
 			        color: 'rgba(0,0,0,0.5)',
-			        offsetX: 10,
-			        offsetX: 10
+			        offsetX: 5,
+			        offsetY: 5
 				}));
 				
 				// Add rect to vertical group
@@ -264,8 +269,8 @@ function drawTimeline(xml){
 				img.set('shadow', new fabric.Shadow({
 					blur: 10,
 			        color: 'rgba(0,0,0,0.5)',
-			        offsetX: 10,
-			        offsetX: 10
+			        offsetX: 5,
+			        offsetY: 5
 				}));			
 				
 				iconIndex++;  	
@@ -384,13 +389,13 @@ function drawPlayStopButton() {
 	var triangle = new fabric.Triangle({
 		originY: "center",
 		originX: "center",
-    	width: 30, height: 30, left: c.width/2 - 50, top: top, fill: playStopColor
+    	width: 30, height: 30, left: c.width/2 - 40, top: top, fill: playStopColor
   	});
 
   	var circle = new fabric.Circle({
   		originY: "center",
 		originX: "center",
-    	radius: 35, left: c.width/2 - 50, top: top, fill: playStopBackgroundColor
+    	radius: 30, left: c.width/2 - 40, top: top, fill: playStopBackgroundColor
   	});
   	circle.set('shadow', new fabric.Shadow({
 		blur: 10,
@@ -412,14 +417,15 @@ function drawPlayStopButton() {
   	c.bringToFront(playButton);
 
   	playButton.on({"mouseup": function(e) {
-  		playVideo();
+  		queueIndex = -1;
+  		nextMedia();
 	}});
 
 	// Stop button
 	var circleStop = new fabric.Circle({
   		originY: "center",
 		originX: "center",
-    	radius: 35, left: c.width/2 + 50, top: top, fill: playStopBackgroundColor
+    	radius: 30, left: c.width/2 + 40, top: top, fill: playStopBackgroundColor
   	});
   	circleStop.set('shadow', new fabric.Shadow({
 		blur: 10,
@@ -428,13 +434,19 @@ function drawPlayStopButton() {
         offsetX: 10
 	}));
 
-	var rect = new fabric.Rect({
+	var rect1 = new fabric.Rect({
   		originY: "center",
 		originX: "center",
-    	width: 25, height: 25, left: c.width/2 + 50, top: top, fill: playStopColor
+    	width: 10, height: 25, left: c.width/2 + 32, top: top, fill: playStopColor
   	});
 
-	var stopButton = new fabric.Group([circleStop, rect], {
+  	var rect2 = new fabric.Rect({
+  		originY: "center",
+		originX: "center",
+    	width: 10, height: 25, left: c.width/2 + 48, top: top, fill: playStopColor
+  	});
+
+	var stopButton = new fabric.Group([circleStop, rect1, rect2], {
 	// var stopButton = new fabric.Group([rect], {
   		hasBorders: false,
   		hasControls: false,
@@ -548,34 +560,16 @@ function createVideoQueue() {
 	
 	// Saving paths to global videoQueue
 	console.log(videoPaths);
-	videoQueue = videoPaths;	
-
-	//playVideo();
+	videoQueue = videoPaths;		
 }
 
 function playVideo() {	
 	// Getting video element
 	var videoPlayer = document.getElementById("video");
 	$("#picture").hide();	
-	$("#video").show();	
-	
-	// Adding on ended event; progresses to next video in queue
-	videoPlayer.onended = function() {
-		createVideoQueue();
-		queueIndex++;
-		if(queueIndex < videoQueue.length) {
+	$("#video").show();			
 
-			if (videoQueue[queueIndex].match(/.(jpg|jpeg|png|gif)$/i)) {
-				showImage();				
-			}
-			else {
-				videoPlayer.src = "./assets/" + videoQueue[queueIndex];
-				videoPlayer.play();
-				console.log(videoQueue[queueIndex]);
-				movePlayhead(queueIndex);	
-			}			
-		}
-	}
+	clearTimeout(timer);	
 
 	// Setting source of video element to queue index
 	videoPlayer.src = "./assets/" + videoQueue[queueIndex];
@@ -584,19 +578,50 @@ function playVideo() {
 	videoPlayer.play();
 	movePlayhead(queueIndex);
 	isPlaying = true;
+
+	videoPlayer.onended = function() { nextMedia(); };
+}
+
+function nextMedia() {
+	var videoPlayer = document.getElementById("video");
+	clearTimeout(timer);
+
+	createVideoQueue();
+	queueIndex++;
+	if(queueIndex < videoQueue.length) {
+
+		if (videoQueue[queueIndex].match(/.(jpg|jpeg|png|gif)$/i)) {
+			showImage();				
+		}
+		else {
+			$("#picture").hide();	
+			$("#video").show();	
+
+			videoPlayer.src = "./assets/" + videoQueue[queueIndex];
+			videoPlayer.play();
+			isPlaying = true;
+			console.log(videoQueue[queueIndex]);
+			movePlayhead(queueIndex);	
+		}			
+	}
 }
 
 function stopVideo() {
 	var videoPlayer = document.getElementById("video");
-	videoPlayer.pause();
-	//videoPlayer.src = null;
+	if(isPlaying) {videoPlayer.pause();}
 
-	movePlayhead(0);
+
+	$("#picture").hide();	
+	$("#video").hide();	
+
+	// movePlayhead(0);
 	isPlaying = false;
+	clearTimeout(timer);
 }
 
 function showImage() {
 	stopVideo();
+	clearTimeout(timer);
 
 	$("#picture").show();	
 	$("#video").hide();	
@@ -606,6 +631,9 @@ function showImage() {
 	movePlayhead(queueIndex);
 
 	isPlaying = false;
+
+	// Set timer
+	timer = setTimeout(function() {nextMedia();}, imageTimer);
 }
 
 function drawPlayhead() {
@@ -625,12 +653,6 @@ function drawPlayhead() {
     	hoverCursor: "default"
 
   	});
-  	playhead.set('shadow', new fabric.Shadow({
-		blur: 10,
-        color: 'rgba(0,0,0,0.5)',
-        offsetX: 10,
-        offsetX: 10
-	}));
 
 	c.add(playhead);
 	playhead.sendToBack();
