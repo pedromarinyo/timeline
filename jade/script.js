@@ -63,7 +63,7 @@ function init(){
 		// Preload images from timeline; once done, drawTimeline()				
 		preloadImages(xmlTimeline, function (){
 			drawTimeline(xmlTimeline);	
-			drawPlayStopButton();		
+			// drawPlayStopButton();		
 			drawPlayhead();			
 		});		
 	// });	
