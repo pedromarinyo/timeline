@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style type="text/css">
+			html, body {								
+				margin: 0px;
+				padding: 0px;
+				background-color: #302940;				
+				text-align: center;
+			}
+
+			input {
+			  	display: none;
+			}
+
+			#instructions {	
+				position: static;	
+								
+				color: #fff;
+				text-align: left;
+				padding: 25px;
+
+			}	
+			#instructions #title {				
+				font-size: 3em;				
+				color: #fff;
+				display: inline-block;
+				font-family: 'Lobster Two', cursive;	
+			}
+			#instructions label {
+				cursor: pointer;
+				color: #fff;  
+			    cursor: pointer;  			    
+			    text-decoration: none;
+			    font-size: 1.2em; 
+			}
+			#instructions div {
+				margin-left: 25px;
+				padding-left: 35px;
+				font-size: 1em; 
+				display: inline-block;
+			    color: #fff;  			    			   
+			    text-decoration: none;
+			}
+			#instructions b {
+				font-family: 'Lobster Two', cursive;
+			}
+			
+			.media {
+				max-width: 100%;
+				height: 480px;
+				margin-left: auto;
+				margin-right: auto;
+				
+				background-color: #000;
+				padding: 0px;
+				
+				display: none;				
+			}			
+			.mediaContainer {
+				width: 100%;
+				height: 480px;
+				background-color: #000;
+				box-shadow: 0 0px 180px 0 rgba(0, 0, 0, 0.5), 0 0px 20px 0 rgba(0, 0, 0, 0.5);
+			}
+
+			canvas {
+				margin: auto;
+				padding: 0px;
+				border: 0px;
+			}
+			.canvas-container { 
+				margin: 0 auto ;
+			}
+
+		</style>
+		<!-- Fabric js -->
+		<script src="./fabric.min.js"></script>
+		<!-- Jquery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- Custom -->
+		<script src="./script.js"> </script>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Lobster+Two:wght@700&display=swap" rel="stylesheet">
+
+	</head>
+
+	<body onload="init()">
+		<input type="file" id="file-selector">
+		<div id="instructions">
+			<div id="title">Vespers</div>
+			<!-- <label for="file-selector" class="fileSelector">Choose a file</label> -->
+			<div style="border-left: solid #eee 2px; margin-top: 15px;">
+				Written and Designed by <b>Colin Stricklin</b><br>
+				Illustrated by ______<br>
+				Interface Programmed by <b>Pedro Silva</b>
+			</div>
+
+			<div style="border-left: solid #eee 2px; margin-top: 15px;">
+				<b>Slide</b> columns to select choices.<br>
+				<b>Doubleclick</b> a tile to jump to a scene.<br>
+				<b>Refresh</b> to resize the timeline.
+			</div>
+		</div>
+		
+		<div class="mediaContainer">
+			<video controls class="media" id="video"></video>
+			<img class="media" id="picture"></img>
+		</div>
+
+
+
+		<canvas id="canvas"></canvas>
+	</body>
+
+</html>
