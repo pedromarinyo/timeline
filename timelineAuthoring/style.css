@@ -14,6 +14,7 @@ html, body {
     width: 100%;
     font-size: 1.4em;
     margin-bottom: 10px;
+    font-family: 'Praise', cursive;
 }
 .inspectorSubheading {
     color: #eee;
@@ -26,10 +27,11 @@ html, body {
 
 /*Instructions*/
 #title {       
-    font-size: 2em; 
+    font-size: 3em; 
     color: #fff; 
     padding: 30px;
     display: inline-block;
+    font-family: 'Praise', cursive;
 }
 .titleSubheading {    
     font-size: 1.2em; 
