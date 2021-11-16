@@ -4,7 +4,7 @@
 var timeline = new Array();
 var selectedTile = null;
 var selectedMedia = null;   
-var ids = 0;   
+var ids = 5;   
 
 // Authoring interface initialization
 function init() {                
@@ -626,9 +626,8 @@ function addMedia() {
 // Remove media associated with tile
 function deleteMedia(mediaNode) {
     // Getting index of media with mediaNode.id
-    let media = selectedTile.media.find(media => { return media.id = mediaNode.id;});
+    let media = selectedTile.media.find(media => { return media.id == mediaNode.id;});
     let mediaIndex = selectedTile.media.indexOf(media);
-
 
     // Splicing out media item  with id from selectedTile global                  
     selectedTile.media.splice(mediaIndex, 1);
