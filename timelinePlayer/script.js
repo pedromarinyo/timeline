@@ -10,12 +10,14 @@ var queueIndex = 0;
 var playhead; 
 var isPlaying = false;
 var timer; 
+var autoAdvance = "true";
 
 var tilePadding = 10;
 var tileSize;
 var tileWrapper = 120;
 var timelineTopRatio = 0.6;
-var imageTimer = 30000;
+var imageTimer = 12000;
+var mediaHeight = 360;
 
 var tileColor = "#F7F0F0";
 var tileFontColor = "#333";
@@ -124,7 +126,18 @@ function preloadImages(xml, callback) {
 
 function drawTimeline(xml){
 	console.log("drawing timeline");
-	
+
+	// Store autoAdvance variable
+	if (xml.getElementsByTagName("autoAdvance")[0] != null) {
+		autoAdvance = xml.getElementsByTagName("autoAdvance")[0].childNodes[0].nodeValue;
+		imageTimer = xml.getElementsByTagName("autoAdvanceSeconds")[0].childNodes[0].nodeValue * 1000;
+		mediaHeight = xml.getElementsByTagName("mediaHeight")[0].childNodes[0].nodeValue;
+		$(".media").css("height", parseInt(mediaHeight));
+		$(".mediaContainer").css("height", parseInt(mediaHeight));
+
+		console.log(autoAdvance + " " + imageTimer);
+	}
+		
 	var xmlArray = xml.getElementsByTagName("tile");	// Stores xml objects
 	var tileArray = [];									// Stores fabric objects
 	
@@ -579,7 +592,10 @@ function playVideo() {
 	movePlayhead(queueIndex);
 	isPlaying = true;
 
-	videoPlayer.onended = function() { nextMedia(); };
+	// If autoadvace is on, play next video
+	if (autoAdvance == "true") {
+		videoPlayer.onended = function() { nextMedia(); };
+	}
 }
 
 function nextMedia() {
@@ -633,7 +649,10 @@ function showImage() {
 	isPlaying = false;
 
 	// Set timer
-	timer = setTimeout(function() {nextMedia();}, imageTimer);
+	
+	if (autoAdvance == "true") {
+		timer = setTimeout(function() {nextMedia();}, imageTimer);
+	}
 }
 
 function drawPlayhead() {

@@ -847,6 +847,13 @@ function createXML(){
     // Opening empty xml
     let xml = "<timeline>";
 
+    let isAutoAdvance = $('#autoAdvance').is(":checked");
+    let autoAdvanceSeconds = $("#numAutoAdvanceSeconds").val();
+    let mediaHeight = $("#mediaHeight").val();
+    xml += "<autoAdvance>"+ isAutoAdvance +"</autoAdvance>";
+    xml += "<autoAdvanceSeconds>"+ autoAdvanceSeconds +"</autoAdvanceSeconds>";
+    xml += "<mediaHeight>"+ mediaHeight +"</mediaHeight>";
+
     timeline.forEach(tile => {
         xml += "<tile>"
         xml += "<id>"+ tile.id +"</id>";
@@ -919,7 +926,7 @@ function createXML(){
     download(xml);
 }
 
-// create js timeline from xml
+// Create js timeline from xml
 function loadTimelineFromXML(xml) {
     timeline = new Array();
     
@@ -1074,6 +1081,14 @@ function showHelp() {
 
 function hideHelp() {
     $("#help").fadeOut(100);   
+}
+
+function toggleAutoAdvanceSeconds(checkboxElem) {
+    if (checkboxElem.checked) {
+        $("#autoAdvanceSeconds").fadeIn(100);
+    } else {
+        $("#autoAdvanceSeconds").fadeOut(100);
+    }
 }
 
 // {

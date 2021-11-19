@@ -3,7 +3,7 @@ html, body {
     height: 100%;
     margin: 0px;
     padding: 0px;
-    background-color: #2C4A4F;                                
+    background-color: #334738;                                
     text-align: left;
 }
 
@@ -12,7 +12,7 @@ html, body {
     display: block;
     text-align: center;
     width: 100%;
-    font-size: 1.4em;
+    font-size: 2em;
     margin-bottom: 10px;
     font-family: 'Praise', cursive;
 }
@@ -27,9 +27,10 @@ html, body {
 
 /*Instructions*/
 #title {       
-    font-size: 3em; 
+    font-size: 3.5em; 
     color: #fff; 
     padding: 30px;
+    padding-bottom: 0px;
     display: inline-block;
     font-family: 'Praise', cursive;
 }
@@ -58,7 +59,7 @@ html, body {
     vertical-align: top;
 }
 .tileChoice {
-    background-color: #1b3630;  
+    background-color: #474133;  
 }
 .choiceColumn {
     display: inline-block;
@@ -183,7 +184,7 @@ html, body {
     height: 100%;    
     background-color: #333d36;
     text-align: center;
-    border-top: solid #111 8px;
+    border-top: solid #111 4px;
 }
 #inspector #mediaOptions #conditionEditorClose {
     display: none;
@@ -297,4 +298,10 @@ select {
     background-position: center;
     background-size: cover;    
     cursor: pointer;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

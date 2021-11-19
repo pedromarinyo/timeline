@@ -24,8 +24,16 @@
             <a class="titleSubheading" href="https://pedromarinyo.github.io/timeline/timelinePlayer/timelinePlayer.zip">Download Player</a>
 
             <span class="titleSubheading" style="border-left: solid #aaa 2px;" onclick="showHelp()">Instructions</span>
+            <div class="titleSubheading" style="color: #ccc; font-size: 1em; display: block; margin-left: 30px;">
+                Media Height<input id="mediaHeight" type="number" style="width: 35px;" value="360">
+                Auto-Advance Images<input id="autoAdvance" type="checkbox" onchange="toggleAutoAdvanceSeconds(this)">
+                <span id="autoAdvanceSeconds" style="display: none;">
+                    at <input value="10" id="numAutoAdvanceSeconds" style="width: 25px;" type="number">seconds
+                </span>
+            </div>
 
         </div>
+
 
         <!-- Timeline outline -->
         <div id="timeline"></div>
